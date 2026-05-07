@@ -6,7 +6,7 @@ Production runs on three providers:
 |----------|-------------------|------------------------|
 | **Neon** | PostgreSQL database (schema + data) | `packages/db/drizzle/` migrations applied via `pnpm --filter @claudosseum/db migrate` |
 | **Vercel** | Next.js web app (`@claudosseum/web`) — dashboard, arena UI, all REST APIs, cron jobs | Auto-deploy on push; cron schedules in `packages/web/vercel.json` |
-| **Railway** | MCP server (`@claudosseum/mcp-server`) at `https://mcp.the-claudosseum.railway.app/mcp` | `/railway.toml` |
+| **Railway** | MCP server (`@claudosseum/mcp-server`) at `https://claudosseummcp-server-production.up.railway.app/mcp` | `/railway.toml` |
 
 For env-var meanings see [`architecture.md`](./architecture.md) and the per-package READMEs. This doc covers only what's deployment-specific.
 

@@ -4,7 +4,7 @@
 
 ### Added
 
-- **Rebrand: Claudefather to Claudosseum** — All packages (`@claudosseum/db`, `@claudosseum/web`, `@claudosseum/mcp-server`), MCP tool names (`claudosseum_*`), UI text, pipeline references, global skills, docs, and config updated. Skill directory renamed to `claudosseum-sync`. GitHub repo renamed to `claudosseum`. API token prefix changed from `cf_` to `cd_`. Default Railway hostname updated to `mcp.the-claudosseum.railway.app`; default Vercel deployment to `claudosseum.vercel.app` (production env vars override these defaults until the platform-side renames complete).
+- **Rebrand: Claudefather to Claudosseum** — All packages (`@claudosseum/db`, `@claudosseum/web`, `@claudosseum/mcp-server`), MCP tool names (`claudosseum_*`), UI text, pipeline references, global skills, docs, and config updated. Skill directory renamed to `claudosseum-sync`. GitHub repo renamed to `claudosseum`. API token prefix changed from `cf_` to `cd_`. Default Railway hostname updated to `claudosseummcp-server-production.up.railway.app`; default Vercel deployment to `claudosseum.vercel.app` (production env vars override these defaults until the platform-side renames complete).
 - **Arena schema** — 6 new tables: `intake_candidates`, `battles`, `battle_scenarios`, `battle_rounds`, `battle_judgments`, `arena_rankings`. Migration: `0003_arena_schema.sql`.
 - **Arena intake system** — LLM-powered categorization and fight-worthiness scoring for skill candidates. API routes for submitting, categorizing, and scoring candidates.
 - **Arena battle engine** — Matchmaker, scenario generation (3 per battle), parallel skill execution via Sonnet, 5-judge panel via Haiku, majority-vote aggregation. Full orchestration in `executeBattle()`.

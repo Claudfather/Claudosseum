@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const MCP_SERVER_URL = process.env.NEXT_PUBLIC_MCP_SERVER_URL || "https://mcp.the-claudosseum.railway.app";
+const MCP_SERVER_URL = process.env.NEXT_PUBLIC_MCP_SERVER_URL || "https://claudosseummcp-server-production.up.railway.app";
 
 export function TokenForm() {
   const [name, setName] = useState("");

@@ -2,7 +2,7 @@
 
 Streamable HTTP MCP server hosted on Railway. Exposes 9 tools backed by the Claudosseum database, used by Claude Code clients via the `claudosseum-sync` skill.
 
-Production: `https://mcp.the-claudosseum.railway.app/mcp`
+Production: `https://claudosseummcp-server-production.up.railway.app/mcp`
 
 ## Stack
 

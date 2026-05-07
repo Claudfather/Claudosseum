@@ -46,7 +46,7 @@ NEXTAUTH_SECRET=          # openssl rand -base64 32
 ANTHROPIC_API_KEY=
 
 # MCP server URL surfaced in the dashboard config snippet
-NEXT_PUBLIC_MCP_SERVER_URL=https://mcp.the-claudosseum.railway.app/mcp
+NEXT_PUBLIC_MCP_SERVER_URL=https://claudosseummcp-server-production.up.railway.app/mcp
 
 # Optional toggles
 ARENA_ENABLED=            # leave unset (default: enabled). Set to "false" to short-circuit /api/arena/*.

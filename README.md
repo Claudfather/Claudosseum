@@ -26,7 +26,7 @@ Claudosseum includes a centralized skills registry that replaces git-clone sync 
   "mcpServers": {
     "claudosseum": {
       "type": "http",
-      "url": "https://mcp.the-claudosseum.railway.app/mcp",
+      "url": "https://claudosseummcp-server-production.up.railway.app/mcp",
       "headers": {
         "Authorization": "Bearer <your-token>"
       }
