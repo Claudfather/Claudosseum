@@ -80,10 +80,9 @@ The fast version of "we lost everything, rebuild prod":
 2. **Vercel** — create a project pointing at this repo, root `packages/web`; set every env var from the matrix above; first deploy.
 3. **Railway** — create a project pointing at this repo; the build/start commands come from `railway.toml`; set `DATABASE_URL`; deploy.
 4. **GitHub OAuth App** — register, set callback to `<NEXTAUTH_URL>/api/auth/callback/github`, populate `GITHUB_CLIENT_ID/SECRET` in Vercel.
-5. **Migrations** — `pnpm --filter @claudosseum/db migrate` against the new prod `DATABASE_URL`.
-6. **Seed** — `pnpm --filter @claudosseum/db seed` to populate skills + categories from `global/skills/`.
-7. **First admin user** — sign in once via the deployed app, then `UPDATE users SET role='admin' WHERE github_login='<you>'` directly in Neon.
-8. **Smoke test** — sign in, generate an API token, hit `/health` on the MCP server, run `pnpm arena-test status` from a maintainer machine pointed at the new DB.
+5. **Bootstrap the DB** — `pnpm db:bootstrap` against the new prod `DATABASE_URL`. Builds the db package, applies the baseline migration, seeds skills + categories from `global/skills/`. Idempotent.
+6. **First admin user** — sign in once via the deployed app, then `UPDATE users SET role='admin' WHERE github_login='<you>'` directly in Neon.
+7. **Smoke test** — sign in, generate an API token, hit `/health` on the MCP server, run `pnpm arena-test status` from a maintainer machine pointed at the new DB.
 
 ## Rollback
 

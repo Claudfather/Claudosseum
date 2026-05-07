@@ -47,13 +47,21 @@ For arena flow, see [`documentation/arena-process-flow.md`](../../documentation/
 
 ## Workflow
 
-After changing the schema:
+**First-time bootstrap** (fresh DB):
+
+```bash
+pnpm db:bootstrap   # build → migrate → seed; idempotent
+```
+
+**After changing the schema:**
 
 ```bash
 pnpm --filter @claudosseum/db generate   # write a new migration
 pnpm --filter @claudosseum/db migrate    # apply it
 pnpm --filter @claudosseum/db build      # rebuild dist so consumers see the new types
 ```
+
+**Always add CHECK constraints to `schema.ts`** for any text column with an enum, using `check("chk_<table>_<col>", sql\`${table.col} IN (...)\`)` in the table options. The TypeScript `enum: [...]` hint gives type safety at compile time; the CHECK constraint enforces it at runtime in the DB. Drift between the two has caused real bugs (e.g., `verdict_synthesis` was missing from a migration constraint, would have rejected valid writes).
 
 Downstream packages import like:
 
@@ -68,7 +76,9 @@ Subpath exports: `./client`, `./schema`, `./auth`, `./publish` (see `package.jso
 
 ## Migrations
 
-12 migrations as of `0012_arena_quality_signal.sql`. Each is sequenced via `drizzle/meta/_journal.json`. All have `breakpoints: true` set, giving Drizzle explicit transaction boundaries inside a single migration file — required because the Neon HTTP driver does not support interactive transactions.
+Single baseline migration as of `0000_initial.sql`. Captures the entire schema generated from `src/schema.ts`, including all 20 CHECK constraints. Sequenced via `drizzle/meta/_journal.json`. The Neon HTTP driver does not support interactive transactions, so multi-statement atomicity uses `db.batch()` at the application layer instead.
+
+The previous twelve `0001_phase05`–`0012_arena_quality_signal` migrations were collapsed during the Claudosseum rename: phases 01–04 were never captured as SQL (they were applied via `drizzle-kit push`), so the chain couldn't run on a fresh DB. The collapsed baseline makes `pnpm db:bootstrap` work end-to-end on any clean Neon branch.
 
 When adding a migration that depends on data state, prefer separate migrations for schema and backfill so a partial failure leaves the DB in a recoverable state.
 

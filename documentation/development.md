@@ -63,14 +63,11 @@ CRON_SECRET=              # required to invoke /api/cron/* outside of Vercel
 
 1. Create a Neon project and a branch named `dev` (or whatever you like).
 2. Copy the connection string into `DATABASE_URL`. Make sure it has `?sslmode=require`.
-3. Apply migrations:
+3. Bootstrap (build, migrate, seed) with one command:
    ```bash
-   pnpm --filter @claudosseum/db migrate
+   pnpm db:bootstrap
    ```
-4. Seed skills + categories from `global/skills/`:
-   ```bash
-   pnpm --filter @claudosseum/db seed
-   ```
+   Idempotent — re-running is safe; migrate is a no-op and seed skips existing rows.
 
 ### Option B — Using local Postgres
 
