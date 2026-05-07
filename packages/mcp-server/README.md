@@ -45,7 +45,7 @@ Each tool is a single file under `src/tools/`. Registration is in `src/server.ts
 
 ## Auth
 
-Every `/mcp` request must carry `Authorization: Bearer cf_…`. The middleware (`src/index.ts`) calls `validateToken(db, token)` from `@claudosseum/db/auth`:
+Every `/mcp` request must carry `Authorization: Bearer cd_…`. The middleware (`src/index.ts`) calls `validateToken(db, token)` from `@claudosseum/db/auth`:
 
 1. Look up by `tokenPrefix` (first 11 chars of the raw token)
 2. bcrypt-compare against the stored hash
@@ -86,7 +86,7 @@ Required Railway env: `DATABASE_URL`. Optional: `PORT`.
 
 ## Gotchas
 
-- **Token prefix must be `cf_`** — anything else is rejected before the bcrypt step. See `validateToken` in `packages/db/src/auth.ts`.
+- **Token prefix must be `cd_`** — anything else is rejected before the bcrypt step. See `validateToken` in `packages/db/src/auth.ts`.
 - **Stale `@claudosseum/db` dist breaks the server** — Railway's build command rebuilds db each time, but locally you must rebuild manually after schema changes.
 - **Sessions live in an in-memory `Map`** — the server is single-instance. Horizontal scaling would need an external session store.
 - **`publish` failures are silent for non-admins** — the tool returns an error; clients should surface it to the user.

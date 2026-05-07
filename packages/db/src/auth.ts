@@ -3,7 +3,7 @@ import { apiTokens } from "./schema.js";
 import { eq, and, isNull } from "drizzle-orm";
 import type { Db } from "./client.js";
 
-const TOKEN_PREFIX = "cf_";
+const TOKEN_PREFIX = "cd_";
 
 export interface ValidateTokenResult {
   userId: string;

@@ -6,8 +6,8 @@ import { eq, and, isNull } from "drizzle-orm";
 
 const db = createDb(process.env.DATABASE_URL!);
 
-const TOKEN_PREFIX = "cf_";
-const TOKEN_BYTES = 32; // 32 bytes = 64 hex chars + "cf_" prefix = 67 chars total
+const TOKEN_PREFIX = "cd_";
+const TOKEN_BYTES = 32; // 32 bytes = 64 hex chars + "cd_" prefix = 67 chars total
 const BCRYPT_ROUNDS = 12;
 
 // Note: validateToken lives in @claudosseum/db/auth (shared by MCP server and web app)
@@ -29,7 +29,7 @@ export async function generateToken(
   const rawBytes = randomBytes(TOKEN_BYTES);
   const rawToken = TOKEN_PREFIX + rawBytes.toString("hex");
   const tokenHash = await bcrypt.hash(rawToken, BCRYPT_ROUNDS);
-  const tokenPrefix = rawToken.slice(0, 11); // "cf_" + first 8 hex = "cf_abc12345"
+  const tokenPrefix = rawToken.slice(0, 11); // "cd_" + first 8 hex = "cd_abc12345"
   const expiresAt = expiresInDays
     ? new Date(Date.now() + expiresInDays * 24 * 60 * 60 * 1000)
     : null;

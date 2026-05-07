@@ -37,7 +37,7 @@ export const apiTokens = pgTable(
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
     tokenHash: text("token_hash").notNull(),
-    tokenPrefix: text("token_prefix").notNull(), // first 8 chars for display: "cf_abc12..."
+    tokenPrefix: text("token_prefix").notNull(), // first 8 chars for display: "cd_abc12..."
     name: text("name").notNull(),
     expiresAt: timestamp("expires_at", { withTimezone: true }),
     lastUsedAt: timestamp("last_used_at", { withTimezone: true }),
