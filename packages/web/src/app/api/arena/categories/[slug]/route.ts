@@ -6,6 +6,7 @@ import {
   arenaRankings,
 } from "@claudosseum/db/schema";
 import { eq, desc } from "drizzle-orm";
+import { auth } from "@/lib/auth";
 
 const db = createDb(process.env.DATABASE_URL!);
 
@@ -53,4 +54,51 @@ export async function GET(
     ...category,
     skills: categorySkills,
   });
+}
+
+export async function PATCH(
+  request: Request,
+  { params }: { params: Promise<{ slug: string }> }
+) {
+  const session = await auth();
+  if ((session as any)?.role !== "admin") {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
+  const { slug } = await params;
+  const body = await request.json();
+  const { description, scoringRubric } = body;
+
+  if (scoringRubric) {
+    if (!scoringRubric.dimensions || scoringRubric.dimensions.length !== 4) {
+      return NextResponse.json(
+        { error: "Rubric must have exactly 4 dimensions" },
+        { status: 400 }
+      );
+    }
+    for (const d of scoringRubric.dimensions) {
+      if (!d.key || !d.label || !d.description || d.maxScore !== 25) {
+        return NextResponse.json(
+          { error: "Each dimension needs key, label, description, and maxScore=25" },
+          { status: 400 }
+        );
+      }
+    }
+  }
+
+  const updates: Record<string, unknown> = { updatedAt: new Date() };
+  if (description !== undefined) updates.description = description;
+  if (scoringRubric !== undefined) updates.scoringRubric = scoringRubric;
+
+  const result = await db
+    .update(skillCategories)
+    .set(updates)
+    .where(eq(skillCategories.slug, slug))
+    .returning({ id: skillCategories.id });
+
+  if (result.length === 0) {
+    return NextResponse.json({ error: "Category not found" }, { status: 404 });
+  }
+
+  return NextResponse.json({ ok: true });
 }
