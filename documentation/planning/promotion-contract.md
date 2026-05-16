@@ -17,7 +17,7 @@ A skill is **promotion-eligible** when ALL of the following are met. No single s
 | ELO rating | >= 1400 | 200 points above the 1200 baseline. A skill must meaningfully outperform the starting field, not just survive. |
 | Minimum battles | >= 5 | Enough data for ELO to stabilize. Below 5, a lucky matchup can inflate the rating. |
 | Win rate | >= 0.60 | More wins than losses. A skill at 0.50 hasn't proven superiority. |
-| No active losing streak | Last 3 battles must include at least 1 win | Catches skills in decline. A skill that hit 1400 but then lost 3 straight is regressing. |
+| No active losing streak | Last 3 battles must include at least 1 win. "Last 3" is determined by `battles.completedAt DESC`; ties broken by `battles.id` (UUID v4 creation order). | Catches skills in decline. A skill that hit 1400 but then lost 3 straight is regressing. |
 | Category champion or runner-up | Top 2 in `arenaRankings` for its `categoryId` by ELO | Promotion is per-category. Only the best in a category graduate. |
 
 ### 1.2 Judge Confidence
@@ -119,8 +119,7 @@ promotion-package/
     "invocations": 127,
     "success_rate": 0.92,
     "distinct_users": 5,
-    "days_in_production": 14,
-    "title": "The Veteran"
+    "days_in_production": 14
   },
   "lineage": {
     "parent_candidates": ["uuid-1", "uuid-2"],
